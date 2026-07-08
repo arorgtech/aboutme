@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ainul Bhai</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial;
+    color: white;
+    overflow-x: hidden;
+    background: black;
+}
+
+canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+.box {
+    margin: 20px;
+    padding: 20px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,0,255,0.4);
+    box-shadow: 0 0 20px rgba(255,0,255,0.4);
+    opacity: 0;
+    transform: translateY(40px);
+}
+
+.box.reveal{
+    animation: fadeUp 0.9s forwards;
+}
+
+@keyframes fadeUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.header {
+    text-align: center;
+}
+
+.logo {
+    width: 120px;
+    border-radius: 50%;
+    border: 3px solid #ff00cc;
+    box-shadow: 0 0 25px #ff00cc;
+}
+
+h1 {
+    font-size: 35px;
+    background: linear-gradient(#fff,#ff00cc);
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.btn {
+    position: relative;
+    display: inline-block;
+    margin: 10px;
+    padding: 10px 15px;
+    border-radius: 20px;
+    border: 1px solid #ff00cc;
+    color: white;
+    text-decoration: none;
+    overflow: hidden;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    background: rgba(255,0,204,0.2);
+}
+
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.35);
+    transform: scale(0);
+    animation: rippleEffect 0.6s linear;
+    pointer-events: none;
+}
+
+@keyframes rippleEffect {
+    to {
+        transform: scale(6);
+        opacity: 0;
+    }
+}
+
+.skills {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.skill {
+    padding: 15px;
+    border-radius: 15px;
+    border: 1px solid #ff00cc;
+    text-align: center;
+}
+
+.title {
+    color: #ff00cc;
+    margin-bottom: 10px;
+}
+
+/* START SCREEN */
+
+#startScreen{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.start-btn{
+    padding:15px 35px;
+    border:none;
+    border-radius:30px;
+    background:#ff00cc;
+    color:white;
+    font-size:20px;
+    cursor:pointer;
+    box-shadow:0 0 25px #ff00cc;
+}
+
+#mainContent{
+    display:none;
+}
+
+/* TICKER */
+
+.ticker{
+    overflow:hidden;
+    margin-top:10px;
+}
+
+.ticker-box{
+    position:relative;
+    padding:18px 25px;
+    border-radius:15px;
+    overflow:hidden;
+    color:white;
+    font-weight:bold;
+    border:2px solid #ff00cc;
+    background:rgba(255,255,255,0.05);
+    box-shadow:0 0 20px rgba(255,0,255,0.5);
+    white-space:nowrap;
+}
+
+.ticker-box span{
+    display:inline-block;
+    padding-left:100%;
+    animation:scrollText 12s linear infinite;
+}
+
+@keyframes scrollText{
+    0%{
+        transform:translateX(0%);
+    }
+    100%{
+        transform:translateX(-100%);
+    }
+}
+
+.ticker-box::before{
+    content:"";
+    position:absolute;
+    inset:-3px;
+    border-radius:15px;
+    padding:3px;
+    background:linear-gradient(90deg,#ff00cc,#00ffee,#ff00cc);
+    background-size:300% 300%;
+    animation:borderRun 3s linear infinite;
+
+    -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+
+    -webkit-mask-composite:xor;
+            mask-composite:exclude;
+}
+
+@keyframes borderRun{
+    0%{background-position:0% 50%;}
+    100%{background-position:300% 50%;}
+}
+
+/* FOOTER */
+
+footer{
+    text-align:center;
+    padding:25px;
+    color:#aaa;
+    font-size:15px;
+}
+</style>
+</head>
+
+<body>
+
+<audio id="bgMusic" loop>
+<source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" type="audio/mp3">
+</audio>
+
+<canvas id="matrix"></canvas>
+
+<!-- START BUTTON -->
+
+<div id="startScreen">
+  <button class="start-btn" onclick="showInfo()">
+    Explore Portfolio
+  </button>
+</div>
+
+<!-- MAIN CONTENT -->
+
+<div id="mainContent">
+
+<div class="box header">
+
+<img src="https://i.postimg.cc/4NcWQxY7/Into.jpg" class="logo">
+
+<h1>ꫝɪɴυʟ Ᏼʜᴀɪ</h1>
+
+<p>Developer & YouTuber</p>
+
+<a href="https://t.me/addlist/91GLys7knLkxYjM1" target="_blank" class="btn">
+<i class="fas fa-folder-open"></i> TG Folder
+</a>
+
+<a href="https://youtube.com/@ainulbhaiytofficial" target="_blank" class="btn">
+<i class="fab fa-youtube"></i> YouTube
+</a>
+
+<a href="https://t.me/arorgtech" target="_blank" class="btn">
+<i class="fab fa-telegram"></i> Telegram
+</a>
+
+</div>
+
+<div class="box">
+
+<h2 class="title">
+<i class="fab fa-youtube"></i> YOUTUBE IDENTITY
+</h2>
+
+<p>
+Ainul Bhai is a technical content creator focusing on mod apps and development.
+</p>
+
+</div>
+
+<div class="box">
+
+<h2 class="title">
+<i class="fas fa-code"></i> SKILLS
+</h2>
+
+<div class="skills">
+
+<div class="skill">UI (100%)</div>
+<div class="skill">UX (100%)</div>
+<div class="skill">HTML (98%)</div>
+<div class="skill">CSS (98%)</div>
+<div class="skill">XML (90%)</div>
+<div class="skill">Python (70%)</div>
+<div class="skill">Java (70%)</div>
+<div class="skill">JS (60%)</div>
+
+</div>
+
+</div>
+
+<div class="box">
+
+<h2 class="title">
+<i class="fas fa-user"></i> ABOUT ME
+</h2>
+
+<p>
+My name is Ainul Islam Sohag, and I am 19 years old. I am a student with a strong interest in business and app development. Engineering and technology inspire me to learn new things and improve my skills every day. I live with my mother, who is my biggest support and motivation in life. My dream is to create my own successful app in the future and build something that can help people and make a positive impact.
+</p>
+
+</div>
+
+<div class="box">
+
+<h2 class="title">
+<i class="fas fa-robot"></i> BOT.BUSINESS BOTS
+</h2>
+
+<div class="skills">
+
+<div class="skill">
+<i class="fas fa-id-badge"></i><br>
+<a href="https://t.me/myidakbot" target="_blank" style="color:white;text-decoration:none;">
+My Id Bot
+</a>
+</div>
+
+<div class="skill">
+<i class="fas fa-search"></i><br>
+<a href="https://t.me/myidfindbot" target="_blank" style="color:white;text-decoration:none;">
+Id Finder Bot
+</a>
+</div>
+
+<div class="skill">
+<i class="fas fa-heart"></i><br>
+<a href="https://t.me/atoreactionakbot" target="_blank" style="color:white;text-decoration:none;">
+Reaction Bot
+</a>
+</div>
+
+<div class="skill">
+<i class="fas fa-coins"></i><br>
+<a href="https://t.me/refersearnbot" target="_blank" style="color:white;text-decoration:none;">
+Refer & Earn
+</a>
+</div>
+
+</div>
+
+</div>
+
+<div class="box">
+
+<h2 class="title">
+<i class="fas fa-server"></i> PYTHON BOT
+</h2>
+
+<div class="skills">
+
+<div class="skill">
+<i class="fas fa-id-card"></i><br>
+<a href="https://t.me/idfindrobot" target="_blank" style="color:white;text-decoration:none;">
+Id Find Robot
+</a>
+</div>
+
+<div class="skill">
+<i class="fas fa-thumbs-up"></i><br>
+<a href="https://t.me/atoreactionrobot" target="_blank" style="color:white;text-decoration:none;">
+Reaction Bot
+</a>
+</div>
+
+</div>
+
+</div>
+
+<div class="box">
+
+<h2 class="title">
+<i class="fas fa-bolt"></i> UPCOMING PROJECTS
+</h2>
+
+<div class="ticker">
+
+<div class="ticker-box">
+<span>
+<i class="fas fa-user-secret"></i> NATHING• New Ai Bot Group Help Bot Create After My Exam..!! <i class="fas fa-user-secret"></i></span>
+</div>
+
+</div>
+
+</div>
+
+<!-- FOOTER -->
+
+<footer>
+Ⓒ 𝟸𝟶𝟸𝟼 ꫝɪɴυʟㅤᏴʜᴀɪ
+</footer>
+
+</div>
+
+<script>
+
+function showInfo(){
+
+document.getElementById("startScreen").style.display = "none";
+
+document.getElementById("mainContent").style.display = "block";
+
+document.getElementById("bgMusic").play();
+
+const boxes = document.querySelectorAll('.box');
+
+boxes.forEach((box, i)=>{
+setTimeout(()=>{
+box.classList.add('reveal');
+}, i * 400);
+});
+
+}
+
+/* RIPPLE EFFECT */
+
+const buttons = document.querySelectorAll('.btn');
+
+buttons.forEach(btn => {
+
+btn.addEventListener('click', function(e){
+
+let ripple = document.createElement('span');
+
+ripple.classList.add('ripple');
+
+let rect = btn.getBoundingClientRect();
+
+let size = Math.max(rect.width, rect.height);
+
+ripple.style.width = ripple.style.height = size + 'px';
+
+ripple.style.left = (e.clientX - rect.left - size/2) + 'px';
+
+ripple.style.top = (e.clientY - rect.top - size/2) + 'px';
+
+btn.appendChild(ripple);
+
+setTimeout(()=> ripple.remove(), 600);
+
+});
+
+});
+
+/* MATRIX EFFECT */
+
+const canvas = document.getElementById("matrix");
+
+const ctx = canvas.getContext("2d");
+
+canvas.height = window.innerHeight;
+
+canvas.width = window.innerWidth;
+
+let letters = "01".split("");
+
+let fontSize = 14;
+
+let columns = canvas.width / fontSize;
+
+let drops = Array(Math.floor(columns)).fill(1);
+
+function draw(){
+
+ctx.fillStyle="rgba(0,0,0,0.05)";
+
+ctx.fillRect(0,0,canvas.width,canvas.height);
+
+ctx.fillStyle="#ff00cc";
+
+ctx.font=fontSize+"px monospace";
+
+for(let i=0;i<drops.length;i++){
+
+let text=letters[Math.floor(Math.random()*letters.length)];
+
+ctx.fillText(text,i*fontSize,drops[i]*fontSize);
+
+if(drops[i]*fontSize>canvas.height && Math.random()>0.975){
+drops[i]=0;
+}
+
+drops[i]++;
+
+}
+
+}
+
+setInterval(draw,33);
+
+</script>
+
+</body>
+</html>
